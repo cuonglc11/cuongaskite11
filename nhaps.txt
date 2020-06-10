@@ -1,0 +1,17 @@
+ $session = session()->getId();
+      $time  =  time();
+      // $timeNow =   time() - 10;
+      // echo  $timeNow;
+
+      $data =  DB::table('sess')->where('sess' , $session)->count();
+
+      if($data == 0){
+      	   $insert = DB::table('sess')->insert(array('sess'=>$session , 'time'=>$time));
+      }else{
+           $update = DB::table('sess')->where('sess' , $session)->update(array('time'=>$time)); 
+      }
+    
+      $cout =  DB::table('sess')->count();
+      $delete =  DB::table('sess')->where('time','<',$time-10)->delete();
+     
+    	 return view('welcome',compact('cout'));
